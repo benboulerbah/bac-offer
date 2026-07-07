@@ -182,7 +182,7 @@
     </div>
 
     <script>
-        // الرابط الصحيح لجوجل شيت الخاص بك
+        // رابط جوجل شيت الخاص بك
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwdVYvONEfEaDwVE6Xj0PtmnNSsiHsmH-YKBjtMXtmJb6l2P-tvMD0LBFoguh8WfF57/exec'; 
 
         function submitForm(event) {
@@ -196,24 +196,30 @@
             btn.disabled = true;
 
             const form = event.target;
+            const formData = new FormData(form);
 
-            // الإرسال الفعلي إلى جوجل شيت
-            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-                .then(response => {
-                    document.getElementById('successModal').classList.remove('hidden');
-                    form.reset();
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                    
-                    if(typeof fbq === 'function') {
-                        fbq('track', 'Purchase', {value: 3200, currency: 'DZD'});
-                    }
-                })
-                .catch(error => {
-                    alert('حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى أو التأكد من اتصال الإنترنت.');
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                });
+            // الإرسال الفعلي إلى جوجل شيت مع كسر حظر المتصفح
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: formData,
+                mode: 'no-cors' // <-- هذا هو السطر السحري الذي يمنع المتصفح من حظر الطلبية
+            })
+            .then(() => {
+                document.getElementById('successModal').classList.remove('hidden');
+                form.reset();
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                
+                // تفعيل بيكسل فيسبوك إن وجد
+                if(typeof fbq === 'function') {
+                    fbq('track', 'Purchase', {value: 3200, currency: 'DZD'});
+                }
+            })
+            .catch(error => {
+                alert('حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى أو التأكد من اتصال الإنترنت.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
         }
 
         function closeModal() {
