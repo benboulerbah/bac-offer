@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التخرج الفاخرة - هدية البكالوريا</title>
+    <!-- Tailwind CSS for rapid styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cairo for beautiful Arabic typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #fafafa;
+        }
+        /* Custom golden text and gradients */
+        .text-gold { color: #d4af37; }
+        .bg-gold { background-color: #d4af37; }
+        .gradient-dark { background: linear-gradient(135deg, #111 0%, #222 100%); }
+        
+        /* Pulse animation for the CTA button */
+        @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .btn-pulse {
+            animation: pulse-soft 2s infinite;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+        
+        /* Fix Layout Shift for images */
+        .img-container {
+            aspect-ratio: 9 / 16;
+            background-color: #e5e7eb;
+            width: 100%;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .img-container-square {
+            aspect-ratio: 1 / 1;
+            background-color: #e5e7eb;
+            width: 100%;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="antialiased text-gray-800">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gold text-white text-center py-2 text-sm font-bold tracking-wide">
+        🎉 الكمية محدودة جداً - الدفع عند الاستلام 🎉
+    </div>
+
+    <!-- Main Hero Section -->
+    <main class="max-w-md mx-auto bg-white shadow-xl min-h-screen relative pb-20">
+        
+        <!-- Hero Content -->
+        <div class="gradient-dark text-white p-6 rounded-b-3xl text-center relative overflow-hidden">
+            <h1 class="text-3xl font-black mb-2 text-gold leading-tight">الهدية التي تليق بنجاحهم!</h1>
+            <p class="text-gray-300 text-sm mb-6">فرحة البكالوريا لا تتكرر، خلدها بلوحة تخرج فاخرة بلمسة ذهبية سينمائية.</p>
+            
+            <!-- Hero Image Container (Prevents CLS) -->
+            <div class="img-container shadow-2xl border-2 border-yellow-600/30 mx-auto max-w-[280px]">
+                <!-- REPLACE THE SRC WITH YOUR COMPRESSED WEBP IMAGE (MAX 100KB) -->
+                <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
+                     alt="لوحة التخرج الفاخرة" 
+                     class="w-full h-full object-cover"
+                     loading="eager">
+            </div>
+            
+            <div class="mt-6">
+                <span class="text-3xl font-black text-white">3200 دج</span>
+                <span class="text-gray-400 line-through text-sm mr-2">4500 دج</span>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="p-6">
+            <div class="flex items-center justify-center gap-4 mb-8 text-center text-sm font-bold text-gray-700">
+                <div class="flex flex-col items-center">
+                    <span class="bg-yellow-100 p-2 rounded-full mb-1">🚚</span>
+                    توصيل سريع
+                </div>
+                <div class="flex flex-col items-center">
+                    <span class="bg-yellow-100 p-2 rounded-full mb-1">✨</span>
+                    جودة عالية
+                </div>
+                <div class="flex flex-col items-center">
+                    <span class="bg-yellow-100 p-2 rounded-full mb-1">💵</span>
+                    دفع عند الاستلام
+                </div>
+            </div>
+
+            <!-- The Order Form -->
+            <div class="bg-gray-50 border border-gray-200 rounded-2xl p-5 shadow-sm" id="order-form-section">
+                <h2 class="text-xl font-bold text-center mb-4 text-gray-800">اطلب هديتك الآن 🎁</h2>
+                <p class="text-xs text-center text-gray-500 mb-6">يرجى ملء المعلومات التالية وسنتصل بك لتأكيد الطلب</p>
+
+                <!-- 
+                    FORM SUBMISSION: 
+                    You can point the 'action' attribute to a Google Apps Script Webhook 
+                    or a simple PHP script to collect leads without Odoo.
+                -->
+                <form id="purchaseForm" onsubmit="submitForm(event)" class="space-y-4">
+                    
+                    <!-- 1. Full Name -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1" for="fullname">الاسم الكامل</label>
+                        <input type="text" id="fullname" name="fullname" required placeholder="اكتب اسمك ولقبك" 
+                               class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all">
+                    </div>
+
+                    <!-- 2. Phone Number -->
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-1" for="phone">رقم الهاتف</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="05xx xx xx xx" dir="ltr"
+                               class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all text-right">
+                    </div>
+
+                    <!-- 3 & 4. Wilaya and Commune (Row) -->
+                    <div class="flex gap-3">
+                        <div class="w-1/2">
+                            <label class="block text-sm font-bold text-gray-700 mb-1" for="wilaya">الولاية</label>
+                            <input type="text" id="wilaya" name="wilaya" required placeholder="مثال: العاصمة" 
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all">
+                        </div>
+                        <div class="w-1/2">
+                            <label class="block text-sm font-bold text-gray-700 mb-1" for="commune">البلدية</label>
+                            <input type="text" id="commune" name="commune" required placeholder="مثال: باب الزوار" 
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full bg-gold text-white font-black text-lg py-4 rounded-xl mt-4 btn-pulse hover:bg-yellow-600 transition-colors shadow-lg flex justify-center items-center gap-2">
+                        <span>تأكيد الطلب الآن</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </button>
+                    <p class="text-xs text-center text-gray-400 mt-2">معلوماتك آمنة ولن يتم مشاركتها.</p>
+                </form>
+            </div>
+            
+            <!-- Secondary Images (Optional) -->
+            <div class="mt-8 grid grid-cols-2 gap-3">
+                 <div class="img-container-square">
+                     <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="تفاصيل 1" class="w-full h-full object-cover" loading="lazy">
+                 </div>
+                 <div class="img-container-square">
+                     <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="تفاصيل 2" class="w-full h-full object-cover" loading="lazy">
+                 </div>
+            </div>
+            
+        </div>
+    </main>
+
+    <!-- Success Modal (Hidden by default) -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-8 max-w-sm w-full text-center transform scale-95 transition-transform duration-300">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h3 class="text-2xl font-black text-gray-800 mb-2">تم تسجيل طلبك بنجاح!</h3>
+            <p class="text-gray-600 mb-6">سنتصل بك قريباً لتأكيد الطلب وتفاصيل التوصيل. ألف مبروك النجاح!</p>
+            <button onclick="closeModal()" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800">
+                العودة للصفحة
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript to handle form submission without reloading -->
+    <script>
+        function submitForm(event) {
+            event.preventDefault(); // Prevent page reload
+            
+            const btn = event.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            
+            // Show loading state
+            btn.innerHTML = '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> جاري الإرسال...';
+            btn.disabled = true;
+
+            // Collect Data
+            const formData = new FormData(event.target);
+            const data = {
+                fullname: formData.get('fullname'),
+                phone: formData.get('phone'),
+                wilaya: formData.get('wilaya'),
+                commune: formData.get('commune'),
+                timestamp: new Date().toLocaleString()
+            };
+
+            /* * ==========================================
+             * DATA SUBMISSION LOGIC GOES HERE
+             * ==========================================
+             * Instead of Odoo, send this data to a Google Sheet using Webhooks
+             * Example:
+             * fetch('YOUR_GOOGLE_SCRIPT_WEBHOOK_URL', {
+             * method: 'POST',
+             * body: JSON.stringify(data)
+             * }).then(...)
+             */
+
+            // Simulate network request (Remove this in production and use real fetch)
+            setTimeout(() => {
+                // Show Success Modal
+                document.getElementById('successModal').classList.remove('hidden');
+                
+                // Reset Form and Button
+                event.target.reset();
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                
+                // TRIGGER FACEBOOK PIXEL 'Purchase' or 'Lead' EVENT HERE
+                if(typeof fbq === 'function') {
+                    fbq('track', 'Purchase', {value: 3200, currency: 'DZD'});
+                }
+            }, 1000);
+        }
+
+        function closeModal() {
+            document.getElementById('successModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
