@@ -229,10 +229,10 @@
                                 <p class="text-gray-500 text-[11px] leading-tight mt-1">بريق ذهبي دافئ ومبهر يعكس قيمة الإنجاز العظيم ويخطف الأنظار في الصالون.</p>
                                 <div class="mt-2 flex items-center gap-2">
                                     <span class="text-gray-900 font-black text-sm">3600 دج فقط</span>
-                                    <span class="text-gray-400 text-[10px]">(إضافة 400 دج فقط لطلبك الحالي)</span>
+                                    <span class="text-gray-400 text-[10px]">(إضافة 400 دج فقط)</span>
                                 </div>
-                                <button onclick="upgradeOrder('إطار ذهبي بالكامل (3600 دج)')" class="mt-3 w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-xs py-2 rounded-lg transition-colors">
-                                    🔄 ترقية لـ الذهبي الملكي
+                                <button id="upgradeGoldBtn" onclick="upgradeOrder('إطار ذهبي بالكامل (3600 دج)', this)" class="mt-3 w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-xs py-2 rounded-lg transition-colors flex justify-center items-center gap-1">
+                                    <span>🔄 ترقية لـ الذهبي الملكي</span>
                                 </button>
                             </div>
                         </div>
@@ -248,13 +248,13 @@
                             </div>
                             <div class="w-2/3">
                                 <h4 class="font-black text-amber-950 text-base">👑 الإطار الأسود الفاخر بالحواف الذهبية</h4>
-                                <p class="text-amber-900/80 text-[11px] leading-tight mt-1">المزيج السينمائي الأرقى على الإطلاق. إطار أسود ملكي متين ومحاط بحواف ذهبية لامعة، يمنح اللوحة هيبة لا تُنسى وثقلاً خيالياً!</p>
+                                <p class="text-amber-900/80 text-[11px] leading-tight mt-1">المزيج السينمائي الأرقى على الإطلاق. إطار أسود ملكي متين ومحاط بحواف ذهبية لامعة، يمنح اللوحة هيبة لا تُنسى.</p>
                                 <div class="mt-2 flex items-center gap-2">
                                     <span class="text-amber-950 font-black text-sm">3800 دج فقط</span>
                                     <span class="text-amber-700 text-[10px] font-bold">(بفارق بسيط 600 دج فقط!)</span>
                                 </div>
-                                <button onclick="upgradeOrder('إطار أسود بالحواف الذهبية (3800 دج)')" class="mt-3 w-full bg-gradient-to-r from-amber-500 to-yellow-600 text-white font-black text-xs py-2.5 rounded-lg transition-all shadow btn-pulse">
-                                    👑 اختيار التحفة الأفخم الآن
+                                <button id="upgradeMixBtn" onclick="upgradeOrder('إطار أسود بالحواف الذهبية (3800 دج)', this)" class="mt-3 w-full bg-gradient-to-r from-amber-500 to-yellow-600 text-white font-black text-xs py-2.5 rounded-lg transition-all shadow btn-pulse flex justify-center items-center gap-1">
+                                    <span>👑 اختيار التحفة الأفخم الآن</span>
                                 </button>
                             </div>
                         </div>
@@ -279,7 +279,6 @@
         const form = document.getElementById('purchaseForm');
         const submitBtn = form.querySelector('button[type="submit"]');
         
-        // متغيرات مؤقتة لحفظ معلومات العميل الحالية لإرسال الترقية
         let currentClientName = '';
         let currentClientPhone = '';
 
@@ -291,7 +290,7 @@
                 '</div>';
         }
 
-        // 1. نظام إقفال الزر: لا يفتح حتى تمتلئ كل الخانات لمنع النقرات الخاطئة
+        // 1. نظام إقفال الزر: لا يفتح حتى تمتلئ كل الخانات
         function checkFormValidity() {
             if (form.checkValidity()) {
                 submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
@@ -304,24 +303,19 @@
 
         form.addEventListener('input', checkFormValidity);
 
-        // 2. عداد الـ 24 ساعة العكسي التنازلي (FOMO) لزيادة المبيعات
+        // 2. عداد الـ 24 ساعة العكسي التنازلي (FOMO)
         function startCountdown() {
-            let totalSeconds = 23 * 3600 + 59 * 60 + 59; // يبدأ من 23:59:59 ويعاد تلقائياً
-            
+            let totalSeconds = 23 * 3600 + 59 * 60 + 59;
             const hoursEl = document.getElementById('hours');
             const minutesEl = document.getElementById('minutes');
             const secondsEl = document.getElementById('seconds');
 
             setInterval(() => {
-                if (totalSeconds <= 0) {
-                    totalSeconds = 23 * 3600 + 59 * 60 + 59; // إعادة تصفير العداد
-                }
+                if (totalSeconds <= 0) totalSeconds = 23 * 3600 + 59 * 60 + 59;
                 totalSeconds--;
-
                 const hrs = Math.floor(totalSeconds / 3600);
                 const mins = Math.floor((totalSeconds % 3600) / 60);
                 const secs = totalSeconds % 60;
-
                 hoursEl.textContent = hrs < 10 ? '0' + hrs : hrs;
                 minutesEl.textContent = mins < 10 ? '0' + mins : mins;
                 secondsEl.textContent = secs < 10 ? '0' + secs : secs;
@@ -329,21 +323,19 @@
         }
         startCountdown();
 
-        // 3. معالجة إرسال الطلبية الافتراضية
+        // 3. معالجة إرسال الطلبية الافتراضية اللحظي
         function submitForm(event) {
             event.preventDefault(); 
             
             if (localStorage.getItem('blocked_user') === 'true') return;
 
-            // نظام الحماية الذكي ضد البوتات والفيروسات (Rate Limiting)
+            // نظام الحماية الذكي ضد البوتات والفيروسات
             const now = new Date().getTime();
             let orderHistory = JSON.parse(localStorage.getItem('order_history')) || [];
-            orderHistory = orderHistory.filter(timestamp => (now - timestamp) < 60000); // آخر 60 ثانية
-            
+            orderHistory = orderHistory.filter(timestamp => (now - timestamp) < 60000);
             orderHistory.push(now);
             localStorage.setItem('order_history', JSON.stringify(orderHistory));
             
-            // إذا قام نفس الجهاز بـ 5 طلبات أو أكثر في دقيقة، يتم حظره فوراً بشاشة سوداء
             if (orderHistory.length >= 5) {
                 localStorage.setItem('blocked_user', 'true'); 
                 alert('تم رصد نشاط مشبوه من هذا الجهاز. سيتم حظر وصولك للموقع فوراً لحمايته.');
@@ -351,72 +343,68 @@
                 return;
             }
             
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> جاري الإرسال الأمان...';
+            // تحويل حالة الزر إلى جاري الإرسال
+            submitBtn.innerHTML = '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> جاري معالجة الطلب الآمن...';
             submitBtn.disabled = true;
 
-            // حفظ معلومات العميل محلياً لإرسال الترقية إن رغب
             currentClientName = document.getElementById('fullname').value;
             currentClientPhone = document.getElementById('phone').value;
 
-            // الإرسال الفعلي للطلب الأصلي إلى جوجل شيت
+            // إرسال البيانات في الخلفية لجوجل شيت
             fetch(scriptURL, { 
                 method: 'POST', 
                 body: new FormData(form),
                 mode: 'no-cors' 
-            })
-            .then(() => {
-                // إرسال قيمة مخفضة (3.2 دينار) لبيكسل ميتا للتحكم في الـ ROAS
+            });
+
+            // ⭐ الإصلاح الجوهري: الانتقال اللحظي الفوري لصفحة الشحن بعد 1.2 ثانية فقط دون انتظار رد CORS
+            setTimeout(() => {
                 if(typeof fbq === 'function') {
                     fbq('track', 'Purchase', {value: 3.2, currency: 'DZD'});
                 }
-
-                // إخفاء صفحة الهبوط وإظهار صفحة الشكر والـ Upsell فوراً وبشكل سلس
                 document.getElementById('landingPage').classList.add('hidden');
                 document.getElementById('thankYouPage').classList.remove('hidden');
                 window.scrollTo({top: 0, behavior: 'smooth'});
-            })
-            .catch(error => {
-                alert('حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى أو التأكد من اتصال الإنترنت.');
-                submitBtn.innerHTML = originalText;
-                checkFormValidity();
-            });
+            }, 1200);
         }
 
-        // 4. دالة ترقية الطلب (Post-Purchase Upgrade) لطلب الإطار الأفخم والأعلى سعراً
-        function upgradeOrder(frameType) {
-            // نجهز بيانات سطر الترقية ليرسل لجوجل شيت ليعرف فريق التأكيد رغبة الزبون
+        // 4. دالة ترقية الطلب الفورية والسريعة
+        function upgradeOrder(frameType, buttonElement) {
+            // إظهار اللودينج على زر الترقية نفسه بشكل سريع لـ 1 ثانية فقط
+            buttonElement.innerHTML = '<svg class="animate-spin h-4 w-4 text-white inline mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> جاري تحديث الفئة...';
+            
             const upgradeData = new FormData();
             upgradeData.append('fullname', '⚠️ ترقية طلب: ' + currentClientName);
             upgradeData.append('phone', currentClientPhone);
             upgradeData.append('location', 'الزبون اختار ترقية إلى: ' + frameType);
             upgradeData.append('graduateName', 'نفس الاسم المكتوب أعلاه');
 
-            // إظهار تنبيه جاري حفظ اختيارك الفخم
-            alert('تم اختيار الترقية بنجاح! جاري تحديث طلبك للإطار الأفخم مجاناً والأنيق الملكي 👑');
-
+            // إرسال طلب الترقية في الخلفية دون انتظار السيرفر
             fetch(scriptURL, { 
                 method: 'POST', 
                 body: upgradeData,
                 mode: 'no-cors' 
-            })
-            .then(() => {
-                // شاشة تأكيد نهائية للعميل
+            });
+
+            // ⭐ الإصلاح الجوهري: انتقال فوري لصفحة التاج الذهبي النهائية بعد 1 ثانية كاملة لراحة العميل
+            setTimeout(() => {
                 document.getElementById('thankYouPage').innerHTML = '<div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; background:#fff; text-align:center; padding:20px; font-family:Cairo,sans-serif;">' +
                     '<div style="width:80px; height:80px; background:#d4af37; rounded:50%; display:flex; items-center; justify-content:center; margin-bottom:20px; border-radius:50%; color:white; font-size:2.5rem; line-height:80px;">👑</div>' +
                     '<h1 style="font-size:1.8rem; font-weight:900; color:#111; margin-bottom:10px;">تم تحديث طلبيتك للفئة الأفخم!</h1>' +
-                    '<p style="color:#555; font-size:0.95rem; line-height:1.6; max-width:320px;">شكراً جزيلاً لك! لقد اخترت الإطار الأقوى والأجمل. فريقنا سيتصل بك لتأكيد الاسم المطبوع وموعد التوصيل الفوري.</p>' +
+                    '<p style="color:#555; font-size:0.95rem; line-height:1.6; max-width:320px;">شكراً جزيلاً لك! لقد اخترت الإطار الأقوى والأجمل على الإطلاق. فريقنا سيتصل بك لتأكيد تفاصيل الاسم وموعد التوصيل الفوري.</p>' +
                     '</div>';
-            });
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            }, 1000);
         }
 
-        // 5. دالة الإبقاء على الطلب العادي وتخطي العرض
+        // 5. دالة الإبقاء على الطلب العادي
         function keepOriginal() {
             document.getElementById('thankYouPage').innerHTML = '<div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; background:#fff; text-align:center; padding:20px; font-family:Cairo,sans-serif;">' +
                 '<div style="width:80px; height:80px; background:#10b981; rounded:50%; display:flex; items-center; justify-content:center; margin-bottom:20px; border-radius:50%; color:white; font-size:2.5rem; line-height:80px;">✅</div>' +
                 '<h1 style="font-size:1.8rem; font-weight:900; color:#111; margin-bottom:10px;">تم تأكيد طلبك الكلاسيكي!</h1>' +
                 '<p style="color:#555; font-size:0.95rem; line-height:1.6; max-width:320px;">طلبك تحت المعالجة الآن بالإطار الأسود الكلاسيكي (3200 دج). فريق الدعم سيتصل بك قريباً عبر الهاتف لتأكيد الشحن.</p>' +
                 '</div>';
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
     </script>
 </body>
