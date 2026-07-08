@@ -62,146 +62,226 @@
     </head>
 <body class="antialiased text-gray-800">
 
-    <div class="bg-gold text-white text-center py-2 text-sm font-bold tracking-wide">
-        🎉 توصيل متوفر لكل الولايات - الدفع عند الاستلام 🎉
-    </div>
-
-    <main class="max-w-md mx-auto bg-white shadow-xl min-h-screen relative pb-20">
-        
-        <div class="gradient-dark text-white p-6 rounded-b-3xl text-center relative overflow-hidden">
-            <h1 class="text-3xl font-black mb-2 text-gold leading-tight">الهدية التي تليق بنجاحهم!</h1>
-            <p class="text-gray-300 text-sm mb-6">فرحة البكالوريا لا تتكرر، خلدها بلوحة تخرج فاخرة بلمسة ذهبية سينمائية.</p>
-            
-            <div class="img-container shadow-2xl border-2 border-yellow-600/30 mx-auto max-w-[280px]">
-                <img src="https://i.ibb.co/2YnMFPSf/IMG-9074-2.webp" 
-                     alt="لوحة التخرج الفاخرة" 
-                     class="w-full h-full object-cover"
-                     loading="eager">
-            </div>
-            
-            <div class="mt-6">
-                <span class="text-3xl font-black text-white">3200 دج</span>
-                <span class="text-gray-400 line-through text-sm mr-2">4500 دج</span>
-            </div>
+    <div id="landingPage">
+        <div class="bg-gold text-white text-center py-2 text-sm font-bold tracking-wide">
+            🎉 توصيل متوفر لكل الولايات - الدفع عند الاستلام 🎉
         </div>
 
-        <div class="p-6">
-            <div class="flex items-center justify-center gap-4 mb-8 text-center text-sm font-bold text-gray-700">
-                <div class="flex flex-col items-center">
-                    <span class="bg-yellow-100 p-2 rounded-full mb-1">🚚</span>
-                    توصيل سريع
+        <main class="max-w-md mx-auto bg-white shadow-xl min-h-screen relative pb-20">
+            
+            <div class="gradient-dark text-white p-6 rounded-b-3xl text-center relative overflow-hidden">
+                <h1 class="text-3xl font-black mb-2 text-gold leading-tight">الهدية التي تليق بنجاحهم!</h1>
+                <p class="text-gray-300 text-sm mb-6">فرحة البكالوريا لا تتكرر، خلدها بلوحة تخرج فاخرة بلمسة ذهبية سينمائية.</p>
+                
+                <div class="img-container shadow-2xl border-2 border-yellow-600/30 mx-auto max-w-[280px]">
+                    <img src="https://i.ibb.co/2YnMFPSf/IMG-9074-2.webp" 
+                         alt="لوحة التخرج الفاخرة" 
+                         class="w-full h-full object-cover"
+                         loading="eager">
                 </div>
-                <div class="flex flex-col items-center">
-                    <span class="bg-yellow-100 p-2 rounded-full mb-1">✨</span>
-                    جودة عالية
-                </div>
-                <div class="flex flex-col items-center">
-                    <span class="bg-yellow-100 p-2 rounded-full mb-1">💵</span>
-                    دفع عند الاستلام
+                
+                <div class="mt-6 flex flex-col items-center justify-center gap-2">
+                    <div>
+                        <span class="text-3xl font-black text-white">3200 دج</span>
+                        <span class="text-gray-400 line-through text-sm mr-2">4500 دج</span>
+                    </div>
+                    <div class="bg-amber-500/10 border border-yellow-600/30 rounded-xl px-4 py-2 mt-1 w-full max-w-[260px]">
+                        <p class="text-xs text-yellow-400 font-bold mb-1 animate-pulse">⚡ عرض محدود بمناسبة النتائج! ينتهي خلال:</p>
+                        <div class="flex justify-center gap-3 text-white font-black tracking-wider text-sm" id="countdown">
+                            <div class="bg-black/40 px-2 py-1 rounded"><span id="hours">23</span> سا</div>
+                            <div class="bg-black/40 px-2 py-1 rounded"><span id="minutes">59</span> د</div>
+                            <div class="bg-black/40 px-2 py-1 rounded"><span id="seconds">59</span> ث</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="bg-gray-50 border border-gray-200 rounded-2xl p-5 shadow-sm" id="order-form-section">
-                <h2 class="text-xl font-bold text-center mb-4 text-gray-800">اطلب هديتك الآن 🎁</h2>
-                <p class="text-xs text-center text-gray-500 mb-6">يرجى ملء المعلومات التالية وسنتصل بك لتأكيد الطلب</p>
+            <div class="p-6">
+                <div class="flex items-center justify-center gap-4 mb-8 text-center text-sm font-bold text-gray-700">
+                    <div class="flex flex-col items-center">
+                        <span class="bg-yellow-100 p-2 rounded-full mb-1">🚚</span>
+                        توصيل سريع
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="bg-yellow-100 p-2 rounded-full mb-1">✨</span>
+                        جودة عالية
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="bg-yellow-100 p-2 rounded-full mb-1">💵</span>
+                        دفع عند الاستلام
+                    </div>
+                </div>
 
-                <form id="purchaseForm" onsubmit="submitForm(event)" class="space-y-4">
-                    
-                    <div class="flex gap-3">
-                        <div class="w-1/2">
-                            <label class="block text-sm font-bold text-gray-700 mb-1" for="fullname">الاسم الكامل</label>
-                            <input type="text" id="fullname" name="fullname" required placeholder="اسمك ولقبك" 
+                <div class="bg-gray-50 border border-gray-200 rounded-2xl p-5 shadow-sm" id="order-form-section">
+                    <h2 class="text-xl font-bold text-center mb-4 text-gray-800">اطلب هديتك الآن 🎁</h2>
+                    <p class="text-xs text-center text-gray-500 mb-6">يرجى ملء المعلومات التالية وسنتصل بك لتأكيد الطلب</p>
+
+                    <form id="purchaseForm" onsubmit="submitForm(event)" class="space-y-4">
+                        
+                        <div class="flex gap-3">
+                            <div class="w-1/2">
+                                <label class="block text-sm font-bold text-gray-700 mb-1" for="fullname">الاسم الكامل</label>
+                                <input type="text" id="fullname" name="fullname" required placeholder="اسمك ولقبك" 
+                                       class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 outline-none transition-all">
+                            </div>
+                            <div class="w-1/2">
+                                <label class="block text-sm font-bold text-gray-700 mb-1" for="phone">رقم الهاتف</label>
+                                <input type="tel" id="phone" name="phone" required placeholder="05xx xx xx xx" dir="ltr"
+                                       class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 outline-none transition-all text-right">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1" for="location">مكان التوصيل</label>
+                            <input type="text" id="location" name="location" required placeholder="يرجى كتابة الولاية والدائرة معا" 
                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 outline-none transition-all">
                         </div>
-                        <div class="w-1/2">
-                            <label class="block text-sm font-bold text-gray-700 mb-1" for="phone">رقم الهاتف</label>
-                            <input type="tel" id="phone" name="phone" required placeholder="05xx xx xx xx" dir="ltr"
-                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 outline-none transition-all text-right">
+
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-1" for="graduateName">اسم المتحصل على البكالوريا</label>
+                            <input type="text" id="graduateName" name="graduateName" required placeholder="الاسم الذي سيكتب على اللوحة" 
+                                   class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 outline-none transition-all">
                         </div>
-                    </div>
 
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1" for="location">مكان التوصيل</label>
-                        <input type="text" id="location" name="location" required placeholder="يرجى كتابة الولاية والدائرة معا" 
-                               class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 outline-none transition-all">
-                    </div>
+                        <button type="submit" class="w-full bg-gold text-white font-black text-lg py-4 rounded-xl mt-4 btn-pulse hover:bg-yellow-600 transition-colors shadow-lg flex justify-center items-center gap-2 opacity-50 cursor-not-allowed" disabled>
+                            <span>تأكيد الطلب الآن</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </button>
+                        <p class="text-xs text-center text-red-500 mt-2 font-bold">السعر لا يشمل التوصيل</p>
+                    </form>
+                </div>
+                
+                <div class="mt-8 grid grid-cols-2 gap-3">
+                     <div class="img-container-square relative">
+                         <div class="absolute inset-0 bg-black bg-opacity-30 flex items-end justify-center pb-3"><span class="text-white text-sm font-bold drop-shadow-md text-center">مفاجأة تحت<br>الرقاقة الذهبية</span></div>
+                         <img src="https://i.ibb.co/fzCdSJBj/IMG-9079.webp" alt="طبقة ذهبية قابلة للخدش" class="w-full h-full object-cover" loading="lazy">
+                     </div>
+                     <div class="img-container-square relative">
+                         <div class="absolute inset-0 bg-black bg-opacity-30 flex items-end justify-center pb-3"><span class="text-white text-sm font-bold drop-shadow-md text-center">تغليف فاخر<br>(مزين بالورد)</span></div>
+                         <img src="https://i.ibb.co/GvGwvjfh/IMG-9077.webp" alt="إطار ذهبي وأسود" class="w-full h-full object-cover" loading="lazy">
+                     </div>
+                     <div class="img-container-square relative">
+                         <div class="absolute inset-0 bg-black bg-opacity-30 flex items-end justify-center pb-3"><span class="text-white text-sm font-bold drop-shadow-md text-center">فويل لامع<br>جودة لا تزول</span></div>
+                         <img src="https://i.ibb.co/9H07Qz4j/IMG-9076.webp" alt="جودة الفويل" class="w-full h-full object-cover" loading="lazy">
+                     </div>
+                     <div class="img-container-square relative">
+                         <div class="absolute inset-0 bg-black bg-opacity-30 flex items-end justify-center pb-3"><span class="text-white text-sm font-bold drop-shadow-md text-center">تصميم أنيق<br>جاهز للتعليق</span></div>
+                         <img src="https://i.ibb.co/5gX5939r/Artboard-6.webp" alt="تعليق في الحائط" class="w-full h-full object-cover" loading="lazy">
+                     </div>
+                </div>
 
-                    <div>
-                        <label class="block text-sm font-bold text-gray-700 mb-1" for="graduateName">اسم المتحصل على البكالوريا</label>
-                        <input type="text" id="graduateName" name="graduateName" required placeholder="الاسم الذي سيكتب على اللوحة" 
-                               class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-yellow-500 outline-none transition-all">
-                    </div>
-
-                    <button type="submit" class="w-full bg-gold text-white font-black text-lg py-4 rounded-xl mt-4 btn-pulse hover:bg-yellow-600 transition-colors shadow-lg flex justify-center items-center gap-2">
-                        <span>تأكيد الطلب الآن</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                    </button>
-                    <p class="text-xs text-center text-red-500 mt-2 font-bold">السعر لا يشمل التوصيل</p>
-                </form>
-            </div>
-            
-            <div class="mt-8 grid grid-cols-2 gap-3">
-                 <div class="img-container-square relative">
-                     <div class="absolute inset-0 bg-black bg-opacity-30 flex items-end justify-center pb-3"><span class="text-white text-sm font-bold drop-shadow-md text-center">مفاجأة تحت<br>الرقاقة الذهبية</span></div>
-                     <img src="https://i.ibb.co/fzCdSJBj/IMG-9079.webp" alt="طبقة ذهبية قابلة للخدش" class="w-full h-full object-cover" loading="lazy">
-                 </div>
-                 <div class="img-container-square relative">
-                     <div class="absolute inset-0 bg-black bg-opacity-30 flex items-end justify-center pb-3"><span class="text-white text-sm font-bold drop-shadow-md text-center">تغليف فاخر<br>(مزين بالورد)</span></div>
-                     <img src="https://i.ibb.co/GvGwvjfh/IMG-9077.webp" alt="إطار ذهبي وأسود" class="w-full h-full object-cover" loading="lazy">
-                 </div>
-                 <div class="img-container-square relative">
-                     <div class="absolute inset-0 bg-black bg-opacity-30 flex items-end justify-center pb-3"><span class="text-white text-sm font-bold drop-shadow-md text-center">فويل لامع<br>جودة لا تزول</span></div>
-                     <img src="https://i.ibb.co/9H07Qz4j/IMG-9076.webp" alt="جودة الفويل" class="w-full h-full object-cover" loading="lazy">
-                 </div>
-                 <div class="img-container-square relative">
-                     <div class="absolute inset-0 bg-black bg-opacity-30 flex items-end justify-center pb-3"><span class="text-white text-sm font-bold drop-shadow-md text-center">تصميم أنيق<br>جاهز للتعليق</span></div>
-                     <img src="https://i.ibb.co/5gX5939r/Artboard-6.webp" alt="تعليق في الحائط" class="w-full h-full object-cover" loading="lazy">
-                 </div>
-            </div>
-
-            <div class="mt-10 mb-4 border-t pt-8">
-                <h3 class="text-xl font-bold text-center mb-6 text-gray-800">آراء زبائننا 🌟</h3>
-                <div class="space-y-4">
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 relative">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="font-bold text-sm text-gray-800">أمينة م. (وهران)</span>
-                            <div class="text-yellow-400 text-xs">⭐⭐⭐⭐⭐</div>
+                <div class="mt-10 mb-4 border-t pt-8">
+                    <h3 class="text-xl font-bold text-center mb-6 text-gray-800">آراء زبائننا 🌟</h3>
+                    <div class="space-y-4">
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 relative">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-bold text-sm text-gray-800">أمينة م. (وهران)</span>
+                                <div class="text-yellow-400 text-xs">⭐⭐⭐⭐⭐</div>
+                            </div>
+                            <p class="text-gray-600 text-sm">"وصلتني اليوم، الجودة خيالية والفكرة تاع الطبقة الذهبية لي تتنحى خلات خويا يفرح بيها بزاف! شكرا لكم."</p>
                         </div>
-                        <p class="text-gray-600 text-sm">"وصلتني اليوم، الجودة خيالية والفكرة تاع الطبقة الذهبية لي تتنحى خلات خويا يفرح بيها بزاف! شكرا لكم."</p>
-                    </div>
-                    <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 relative">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="font-bold text-sm text-gray-800">سفيان ط. (العاصمة)</span>
-                            <div class="text-yellow-400 text-xs">⭐⭐⭐⭐⭐</div>
+                        <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 relative">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-bold text-sm text-gray-800">سفيان ط. (العاصمة)</span>
+                                <div class="text-yellow-400 text-xs">⭐⭐⭐⭐⭐</div>
+                            </div>
+                            <p class="text-gray-600 text-sm">"خدمة متقنة في القمة. الفريم قوي والاسم مكتوب بطريقة فخمة. التوصيل كان سريع يعطيك الصحة."</p>
                         </div>
-                        <p class="text-gray-600 text-sm">"خدمة متقنة في القمة. الفريم قوي والاسم مكتوب بطريقة فخمة. التوصيل كان سريع يعطيك الصحة."</p>
                     </div>
                 </div>
             </div>
-            
-        </div>
-    </main>
-
-    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl p-8 max-w-sm w-full text-center transform scale-95 transition-transform duration-300">
-            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            </div>
-            <h3 class="text-2xl font-black text-gray-800 mb-2">تم تسجيل طلبك بنجاح!</h3>
-            <p class="text-gray-600 mb-6">سنتصل بك قريباً لتأكيد الطلب وتفاصيل التوصيل. ألف مبروك النجاح!</p>
-            <button onclick="closeModal()" class="w-full bg-gray-900 text-white font-bold py-3 rounded-xl hover:bg-gray-800">
-                العودة للصفحة
-            </button>
-        </div>
+        </main>
     </div>
+
+
+    <div id="thankYouPage" class="hidden">
+        <main class="max-w-md mx-auto bg-gray-50 shadow-xl min-h-screen relative pb-12">
+            
+            <div class="bg-emerald-600 text-white text-center p-8 rounded-b-3xl shadow-md">
+                <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 animate-bounce">
+                    <svg class="w-9 h-9 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h2 class="text-2xl font-black mb-1">تهانينا! تم تسجيل طلبك بنجاح 🎉</h2>
+                <p class="text-sm text-emerald-100">سنتصل بك هاتفياً قريباً جداً لتأكيد تفاصيل الشحن والتوصيل.</p>
+                <div class="mt-4 bg-black/20 rounded-xl p-3 inline-block border border-white/10 text-xs">
+                    🛍️ اختيارك الحالي: <span class="font-bold">اللوحة الكلاسيكية (إطار أسود بالكامل) - 3200 دج</span>
+                </div>
+            </div>
+
+            <div class="p-5">
+                <div class="text-center my-4">
+                    <span class="bg-amber-100 text-amber-800 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider animate-pulse">🔥 فرصة ذهبية للمتفوقين فقط</span>
+                    <h3 class="text-xl font-black text-gray-950 mt-2 leading-tight">اجعل هديتك "الملكية" أكثر فخامة وإبهاراً! ✨</h3>
+                    <p class="text-gray-600 text-xs mt-1 px-4">بما أن التغليف الفاخر المزين بالورد <span class="text-emerald-600 font-bold">مجاني بالكامل اليوم🎁</span>، نقترح عليك ترقية الإطار ليكون فخماً ومناسباً لهيبة هذا النجاح التاريخي:</p>
+                </div>
+
+                <div class="space-y-4 mt-6">
+                    
+                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-4 shadow-sm relative overflow-hidden transition-all hover:border-yellow-500">
+                        <div class="flex gap-4 items-center">
+                            <div class="w-1/3 img-container-square bg-gray-100 rounded-xl relative">
+                                <span class="absolute inset-0 flex items-center justify-center text-[10px] text-gray-400 font-bold text-center p-1">صورة الإطار<br>الذهبي بالكامل</span>
+                            </div>
+                            <div class="w-2/3">
+                                <h4 class="font-black text-gray-900 text-base">✨ الإطار الذهبي الملكي بالكامل</h4>
+                                <p class="text-gray-500 text-[11px] leading-tight mt-1">بريق ذهبي دافئ ومبهر يعكس قيمة الإنجاز العظيم ويخطف الأنظار في الصالون.</p>
+                                <div class="mt-2 flex items-center gap-2">
+                                    <span class="text-gray-900 font-black text-sm">3600 دج فقط</span>
+                                    <span class="text-gray-400 text-[10px]">(إضافة 400 دج فقط لطلبك الحالي)</span>
+                                </div>
+                                <button onclick="upgradeOrder('إطار ذهبي بالكامل (3600 دج)')" class="mt-3 w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-xs py-2 rounded-lg transition-colors">
+                                    🔄 ترقية لـ الذهبي الملكي
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-amber-50/50 border-2 border-amber-500 rounded-2xl p-4 shadow-md relative overflow-hidden transition-all hover:shadow-lg">
+                        <div class="absolute top-0 left-0 bg-amber-500 text-white font-black text-[9px] px-3 py-1 rounded-br-xl uppercase tracking-wider">
+                            🌟 الأكثر طلباً واختيار الصفوة
+                        </div>
+                        <div class="flex gap-4 items-center mt-1">
+                            <div class="w-1/3 img-container-square bg-gray-200 rounded-xl relative border border-amber-300">
+                                <span class="absolute inset-0 flex items-center justify-center text-[10px] text-amber-700 font-bold text-center p-1">صورة الإطار<br>الأسود بالذهبي</span>
+                            </div>
+                            <div class="w-2/3">
+                                <h4 class="font-black text-amber-950 text-base">👑 الإطار الأسود الفاخر بالحواف الذهبية</h4>
+                                <p class="text-amber-900/80 text-[11px] leading-tight mt-1">المزيج السينمائي الأرقى على الإطلاق. إطار أسود ملكي متين ومحاط بحواف ذهبية لامعة، يمنح اللوحة هيبة لا تُنسى وثقلاً خيالياً!</p>
+                                <div class="mt-2 flex items-center gap-2">
+                                    <span class="text-amber-950 font-black text-sm">3800 دج فقط</span>
+                                    <span class="text-amber-700 text-[10px] font-bold">(بفارق بسيط 600 دج فقط!)</span>
+                                </div>
+                                <button onclick="upgradeOrder('إطار أسود بالحواف الذهبية (3800 دج)')" class="mt-3 w-full bg-gradient-to-r from-amber-500 to-yellow-600 text-white font-black text-xs py-2.5 rounded-lg transition-all shadow btn-pulse">
+                                    👑 اختيار التحفة الأفخم الآن
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="text-center mt-8">
+                    <button onclick="keepOriginal()" class="text-gray-400 hover:text-gray-600 font-bold text-xs underline transition-colors">
+                        لا شكراً، أريد الإبقاء على الإطار الأسود العادي (3200 دج) وتأكيد الطلب
+                    </button>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
 
     <script>
         const scriptURL = 'https://script.google.com/macros/s/AKfycbwdVYvONEfEaDwVE6Xj0PtmnNSsiHsmH-YKBjtMXtmJb6l2P-tvMD0LBFoguh8WfF57/exec'; 
 
         const form = document.getElementById('purchaseForm');
         const submitBtn = form.querySelector('button[type="submit"]');
+        
+        // متغيرات مؤقتة لحفظ معلومات العميل الحالية لإرسال الترقية
+        let currentClientName = '';
+        let currentClientPhone = '';
 
         // نظام الحماية المتقدمة: التحقق من الحظر فور فتح الصفحة
         if (localStorage.getItem('blocked_user') === 'true') {
@@ -211,7 +291,7 @@
                 '</div>';
         }
 
-        // 1. نظام إقفال الزر: لا يفتح حتى تمتلئ كل الخانات
+        // 1. نظام إقفال الزر: لا يفتح حتى تمتلئ كل الخانات لمنع النقرات الخاطئة
         function checkFormValidity() {
             if (form.checkValidity()) {
                 submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
@@ -223,24 +303,47 @@
         }
 
         form.addEventListener('input', checkFormValidity);
-        checkFormValidity();
 
+        // 2. عداد الـ 24 ساعة العكسي التنازلي (FOMO) لزيادة المبيعات
+        function startCountdown() {
+            let totalSeconds = 23 * 3600 + 59 * 60 + 59; // يبدأ من 23:59:59 ويعاد تلقائياً
+            
+            const hoursEl = document.getElementById('hours');
+            const minutesEl = document.getElementById('minutes');
+            const secondsEl = document.getElementById('seconds');
+
+            setInterval(() => {
+                if (totalSeconds <= 0) {
+                    totalSeconds = 23 * 3600 + 59 * 60 + 59; // إعادة تصفير العداد
+                }
+                totalSeconds--;
+
+                const hrs = Math.floor(totalSeconds / 3600);
+                const mins = Math.floor((totalSeconds % 3600) / 60);
+                const secs = totalSeconds % 60;
+
+                hoursEl.textContent = hrs < 10 ? '0' + hrs : hrs;
+                minutesEl.textContent = mins < 10 ? '0' + mins : mins;
+                secondsEl.textContent = secs < 10 ? '0' + secs : secs;
+            }, 1000);
+        }
+        startCountdown();
+
+        // 3. معالجة إرسال الطلبية الافتراضية
         function submitForm(event) {
             event.preventDefault(); 
             
             if (localStorage.getItem('blocked_user') === 'true') return;
 
-            // 2. نظام الحماية الذكي ضد البوتات والفيروسات (Rate Limiting)
+            // نظام الحماية الذكي ضد البوتات والفيروسات (Rate Limiting)
             const now = new Date().getTime();
             let orderHistory = JSON.parse(localStorage.getItem('order_history')) || [];
-            
-            // تنظيف السجل القديم والإبقاء فقط على الطلبات التي تمت في آخر 60 ثانية
-            orderHistory = orderHistory.filter(timestamp => (now - timestamp) < 60000);
+            orderHistory = orderHistory.filter(timestamp => (now - timestamp) < 60000); // آخر 60 ثانية
             
             orderHistory.push(now);
             localStorage.setItem('order_history', JSON.stringify(orderHistory));
             
-            // إذا قام نفس الجهاز بـ 5 طلبات أو أكثر في دقيقة واحدة، يتم حظره فوراً
+            // إذا قام نفس الجهاز بـ 5 طلبات أو أكثر في دقيقة، يتم حظره فوراً بشاشة سوداء
             if (orderHistory.length >= 5) {
                 localStorage.setItem('blocked_user', 'true'); 
                 alert('تم رصد نشاط مشبوه من هذا الجهاز. سيتم حظر وصولك للموقع فوراً لحمايته.');
@@ -249,28 +352,29 @@
             }
             
             const originalText = submitBtn.innerHTML;
-            
-            // إظهار حالة التحميل
-            submitBtn.innerHTML = '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> جاري الإرسال...';
+            submitBtn.innerHTML = '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> جاري الإرسال الأمان...';
             submitBtn.disabled = true;
 
-            // الإرسال الفعلي إلى جوجل شيت
+            // حفظ معلومات العميل محلياً لإرسال الترقية إن رغب
+            currentClientName = document.getElementById('fullname').value;
+            currentClientPhone = document.getElementById('phone').value;
+
+            // الإرسال الفعلي للطلب الأصلي إلى جوجل شيت
             fetch(scriptURL, { 
                 method: 'POST', 
                 body: new FormData(form),
                 mode: 'no-cors' 
             })
             .then(() => {
-                document.getElementById('successModal').classList.remove('hidden');
-                form.reset();
-                submitBtn.innerHTML = originalText;
-                
-                checkFormValidity();
-                
-                // 3. إرسال القيمة المخفضة (3.2 دينار) لبيكسل ميتا الخاص بك
+                // إرسال قيمة مخفضة (3.2 دينار) لبيكسل ميتا للتحكم في الـ ROAS
                 if(typeof fbq === 'function') {
                     fbq('track', 'Purchase', {value: 3.2, currency: 'DZD'});
                 }
+
+                // إخفاء صفحة الهبوط وإظهار صفحة الشكر والـ Upsell فوراً وبشكل سلس
+                document.getElementById('landingPage').classList.add('hidden');
+                document.getElementById('thankYouPage').classList.remove('hidden');
+                window.scrollTo({top: 0, behavior: 'smooth'});
             })
             .catch(error => {
                 alert('حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى أو التأكد من اتصال الإنترنت.');
@@ -279,8 +383,40 @@
             });
         }
 
-        function closeModal() {
-            document.getElementById('successModal').classList.add('hidden');
+        // 4. دالة ترقية الطلب (Post-Purchase Upgrade) لطلب الإطار الأفخم والأعلى سعراً
+        function upgradeOrder(frameType) {
+            // نجهز بيانات سطر الترقية ليرسل لجوجل شيت ليعرف فريق التأكيد رغبة الزبون
+            const upgradeData = new FormData();
+            upgradeData.append('fullname', '⚠️ ترقية طلب: ' + currentClientName);
+            upgradeData.append('phone', currentClientPhone);
+            upgradeData.append('location', 'الزبون اختار ترقية إلى: ' + frameType);
+            upgradeData.append('graduateName', 'نفس الاسم المكتوب أعلاه');
+
+            // إظهار تنبيه جاري حفظ اختيارك الفخم
+            alert('تم اختيار الترقية بنجاح! جاري تحديث طلبك للإطار الأفخم مجاناً والأنيق الملكي 👑');
+
+            fetch(scriptURL, { 
+                method: 'POST', 
+                body: upgradeData,
+                mode: 'no-cors' 
+            })
+            .then(() => {
+                // شاشة تأكيد نهائية للعميل
+                document.getElementById('thankYouPage').innerHTML = '<div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; background:#fff; text-align:center; padding:20px; font-family:Cairo,sans-serif;">' +
+                    '<div style="width:80px; height:80px; background:#d4af37; rounded:50%; display:flex; items-center; justify-content:center; margin-bottom:20px; border-radius:50%; color:white; font-size:2.5rem; line-height:80px;">👑</div>' +
+                    '<h1 style="font-size:1.8rem; font-weight:900; color:#111; margin-bottom:10px;">تم تحديث طلبيتك للفئة الأفخم!</h1>' +
+                    '<p style="color:#555; font-size:0.95rem; line-height:1.6; max-width:320px;">شكراً جزيلاً لك! لقد اخترت الإطار الأقوى والأجمل. فريقنا سيتصل بك لتأكيد الاسم المطبوع وموعد التوصيل الفوري.</p>' +
+                    '</div>';
+            });
+        }
+
+        // 5. دالة الإبقاء على الطلب العادي وتخطي العرض
+        function keepOriginal() {
+            document.getElementById('thankYouPage').innerHTML = '<div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; background:#fff; text-align:center; padding:20px; font-family:Cairo,sans-serif;">' +
+                '<div style="width:80px; height:80px; background:#10b981; rounded:50%; display:flex; items-center; justify-content:center; margin-bottom:20px; border-radius:50%; color:white; font-size:2.5rem; line-height:80px;">✅</div>' +
+                '<h1 style="font-size:1.8rem; font-weight:900; color:#111; margin-bottom:10px;">تم تأكيد طلبك الكلاسيكي!</h1>' +
+                '<p style="color:#555; font-size:0.95rem; line-height:1.6; max-width:320px;">طلبك تحت المعالجة الآن بالإطار الأسود الكلاسيكي (3200 دج). فريق الدعم سيتصل بك قريباً عبر الهاتف لتأكيد الشحن.</p>' +
+                '</div>';
         }
     </script>
 </body>
