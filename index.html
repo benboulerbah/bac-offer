@@ -43,7 +43,23 @@
             overflow: hidden;
         }
     </style>
-</head>
+
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1273764684872789');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1273764684872789&ev=PageView&noscript=1"
+    /></noscript>
+    </head>
 <body class="antialiased text-gray-800">
 
     <div class="bg-gold text-white text-center py-2 text-sm font-bold tracking-wide">
@@ -182,43 +198,84 @@
     </div>
 
     <script>
-        // رابط جوجل شيت الخاص بك
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzPYHSWa8Bmd9uiHxVehbjJaknWwDvfoHumtrBd0sff7CgU92dBcnSu-uU1I4OjgJR9/exec'; 
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwdVYvONEfEaDwVE6Xj0PtmnNSsiHsmH-YKBjtMXtmJb6l2P-tvMD0LBFoguh8WfF57/exec'; 
+
+        const form = document.getElementById('purchaseForm');
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        // نظام الحماية المتقدمة: التحقق من الحظر فور فتح الصفحة
+        if (localStorage.getItem('blocked_user') === 'true') {
+            document.body.innerHTML = '<div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; background:#111; color:#ff4444; font-family:Cairo,sans-serif; text-align:center; padding:20px;">' +
+                '<h1 style="font-size:2rem; font-weight:900; margin-bottom:10px;">⚠️ تم حظر الوصول للموقع</h1>' +
+                '<p style="color:#aaa; font-size:1rem;">تم رصد نشاط غير طبيعي أو محاولة إغراق الموقع بطلبات وهمية من هذا الجهاز.</p>' +
+                '</div>';
+        }
+
+        // 1. نظام إقفال الزر: لا يفتح حتى تمتلئ كل الخانات
+        function checkFormValidity() {
+            if (form.checkValidity()) {
+                submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                submitBtn.disabled = true;
+            }
+        }
+
+        form.addEventListener('input', checkFormValidity);
+        checkFormValidity();
 
         function submitForm(event) {
             event.preventDefault(); 
             
-            const btn = event.target.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
+            if (localStorage.getItem('blocked_user') === 'true') return;
+
+            // 2. نظام الحماية الذكي ضد البوتات والفيروسات (Rate Limiting)
+            const now = new Date().getTime();
+            let orderHistory = JSON.parse(localStorage.getItem('order_history')) || [];
+            
+            // تنظيف السجل القديم والإبقاء فقط على الطلبات التي تمت في آخر 60 ثانية
+            orderHistory = orderHistory.filter(timestamp => (now - timestamp) < 60000);
+            
+            orderHistory.push(now);
+            localStorage.setItem('order_history', JSON.stringify(orderHistory));
+            
+            // إذا قام نفس الجهاز بـ 5 طلبات أو أكثر في دقيقة واحدة، يتم حظره فوراً
+            if (orderHistory.length >= 5) {
+                localStorage.setItem('blocked_user', 'true'); 
+                alert('تم رصد نشاط مشبوه من هذا الجهاز. سيتم حظر وصولك للموقع فوراً لحمايته.');
+                window.location.reload(); 
+                return;
+            }
+            
+            const originalText = submitBtn.innerHTML;
             
             // إظهار حالة التحميل
-            btn.innerHTML = '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> جاري الإرسال...';
-            btn.disabled = true;
+            submitBtn.innerHTML = '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> جاري الإرسال...';
+            submitBtn.disabled = true;
 
-            const form = event.target;
-            const formData = new FormData(form);
-
-            // الإرسال الفعلي إلى جوجل شيت مع كسر حظر المتصفح
+            // الإرسال الفعلي إلى جوجل شيت
             fetch(scriptURL, { 
                 method: 'POST', 
-                body: formData,
-                mode: 'no-cors' // <-- هذا هو السطر السحري الذي يمنع المتصفح من حظر الطلبية
+                body: new FormData(form),
+                mode: 'no-cors' 
             })
             .then(() => {
                 document.getElementById('successModal').classList.remove('hidden');
                 form.reset();
-                btn.innerHTML = originalText;
-                btn.disabled = false;
+                submitBtn.innerHTML = originalText;
                 
-                // تفعيل بيكسل فيسبوك إن وجد
+                checkFormValidity();
+                
+                // 3. إرسال القيمة المخفضة (3.2 دينار) لبيكسل ميتا الخاص بك
                 if(typeof fbq === 'function') {
-                    fbq('track', 'Purchase', {value: 3200, currency: 'DZD'});
+                    fbq('track', 'Purchase', {value: 3.2, currency: 'DZD'});
                 }
             })
             .catch(error => {
                 alert('حدث خطأ في الإرسال، يرجى المحاولة مرة أخرى أو التأكد من اتصال الإنترنت.');
-                btn.innerHTML = originalText;
-                btn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                checkFormValidity();
             });
         }
 
