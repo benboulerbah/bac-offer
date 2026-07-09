@@ -360,9 +360,22 @@
                 if(typeof fbq === 'function') {
                     fbq('track', 'Purchase', {value: 3.2, currency: 'DZD'});
                 }
-                // تفعيل بيكسل تيك توك
-                if(typeof ttq === 'function') {
-                    ttq.track('CompletePayment', {value: 3.2, currency: 'DZD'});
+                
+                // تفعيل بيكسل تيك توك (تم تصحيح الشرط وإضافة تفاصيل المنتج المطلوبة)
+                if(window.ttq) {
+                    ttq.track('CompletePayment', {
+                        value: 3.2, 
+                        currency: 'DZD',
+                        content_type: 'product',
+                        contents: [
+                            {
+                                content_id: 'bac_board_classic',
+                                content_name: 'لوحة التخرج الفاخرة',
+                                quantity: 1,
+                                price: 3.2
+                            }
+                        ]
+                    });
                 }
 
                 document.getElementById('landingPage').classList.add('hidden');
