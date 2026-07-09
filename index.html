@@ -76,6 +76,7 @@
     }(window, document, 'ttq');
     </script>
     <!-- TikTok Pixel Code End -->
+
 </head>
 <body class="antialiased text-gray-800">
 
@@ -268,6 +269,7 @@
         </main>
     </div>
 
+    <!-- JavaScript to handle form submission, validations, and anti-spam -->
     <script>
         const scriptURL = 'https://script.google.com/macros/s/AKfycbxYRiNRK_8o_AIUgLf5CV01pi6bIn8JCl2CNopkTAB62szMxEAfjFSSqWHe8lGiaTuj/exec'; 
 
@@ -340,6 +342,21 @@
             submitBtn.innerHTML = '<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> جاري المعالجة...';
             submitBtn.disabled = true;
 
+            // 🚀 الحل: إطلاق البيكسلات فوراً بمجرد الضغط (بشكل متزامن)
+            try {
+                if(typeof fbq === 'function') {
+                    fbq('track', 'Purchase', {value: 3.2, currency: 'DZD'});
+                }
+                if(typeof ttq !== 'undefined') {
+                    ttq.track('CompletePayment', {
+                        value: 3.2, 
+                        currency: 'DZD'
+                    });
+                }
+            } catch(e) {
+                console.error("Pixel Error", e);
+            }
+
             currentOrderId = generateUniqueId();
             currentClientName = document.getElementById('fullname').value;
             currentClientPhone = document.getElementById('phone').value;
@@ -348,36 +365,15 @@
             formData.append('action', 'new_order');      
             formData.append('orderId', currentOrderId);  
 
+            // إرسال البيانات لجوجل شيت في الخلفية
             fetch(scriptURL, { 
                 method: 'POST', 
                 body: formData,
                 mode: 'no-cors' 
             });
 
-            // انتقال صاروخي فوري بعد 1.2 ثانية لتجربة مستخدم مريحة وسريعة
+            // الانتقال لصفحة الشكر بعد 1.2 ثانية
             setTimeout(() => {
-                // تفعيل بيكسل فيسبوك
-                if(typeof fbq === 'function') {
-                    fbq('track', 'Purchase', {value: 3.2, currency: 'DZD'});
-                }
-                
-                // تفعيل بيكسل تيك توك (تم تصحيح الشرط وإضافة تفاصيل المنتج المطلوبة)
-                if(window.ttq) {
-                    ttq.track('CompletePayment', {
-                        value: 3.2, 
-                        currency: 'DZD',
-                        content_type: 'product',
-                        contents: [
-                            {
-                                content_id: 'bac_board_classic',
-                                content_name: 'لوحة التخرج الفاخرة',
-                                quantity: 1,
-                                price: 3.2
-                            }
-                        ]
-                    });
-                }
-
                 document.getElementById('landingPage').classList.add('hidden');
                 document.getElementById('thankYouPage').classList.remove('hidden');
                 window.scrollTo({top: 0, behavior: 'smooth'});
@@ -399,7 +395,6 @@
                 mode: 'no-cors' 
             });
 
-            // انتقال فوري لصفحة التاج بعد 1 ثانية فقط
             setTimeout(() => {
                 document.getElementById('thankYouPage').innerHTML = '<div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100vh; background:#fff; text-align:center; padding:20px; font-family:Cairo,sans-serif;">' +
                     '<div style="width:80px; height:80px; background:#d4af37; rounded:50%; display:flex; items-center; justify-content:center; margin-bottom:20px; border-radius:50%; color:white; font-size:2.5rem; line-height:80px;">👑</div>' +
